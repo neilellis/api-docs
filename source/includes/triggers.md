@@ -20,10 +20,10 @@ Triggers are URLs that will start a redeploy of the service whenever a `POST` re
 
 Attribute | Description
 --------- | -----------
-url | Address to be used to call the trigger with a `POST` request
 name | A user provided name for the trigger
 operation | The operation that the trigger call performs (see table `Operations` below)
 resource_uri | A unique API endpoint that represents the trigger
+url | Address to be used to call the trigger with a `POST` request
 
 
 ### Operations
@@ -193,8 +193,8 @@ Available in Tutum's **REST API**
 
 Parameter | Description
 --------- | -----------
-uuid | The UUID of the service the triggers are associated to  
 trigger_uuid | The UUID of the trigger to retrieve
+uuid | The UUID of the service the triggers are associated to  
 
 ## Delete a trigger
 
@@ -289,6 +289,6 @@ Available in Tutum's **REST API**
 
 Parameter | Description
 --------- | -----------
-uuid | The UUID of the associated service
 trigger_uuid | The UUID of the trigger to call
+uuid | The UUID of the associated service
 

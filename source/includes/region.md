@@ -32,13 +32,13 @@ A region is a representation of an entire or a subset of a data center of a clou
 
 Attribute | Description
 --------- | -----------
-resource_uri | A unique API endpoint that represents the region
-name | An identifier for the region
-label | A user-friendly name for the region
-node_types | A list of resource URIs of the node types available in the region
 availability_zones | A list of resource URIs of the availability zones available in the region
-provider | The resource URI of the provider of the region
 available | Whether the region is currently available for new node deployments
+label | A user-friendly name for the region
+name | An identifier for the region
+node_types | A list of resource URIs of the node types available in the region
+resource_uri | A unique API endpoint that represents the region
+provider | The resource URI of the provider of the region
 
 
 ## List all regions
@@ -88,7 +88,6 @@ Parameter | Description
 --------- | -----------
 name | Filter by region name
 provider | Filter by provider (resource URI)
-
 
 
 ## Get an individual region

@@ -223,45 +223,45 @@ A container is a representation of a Docker container in a node.
 
 Attribute | Description
 --------- | -----------
-uuid | A unique identifier for the container generated automatically on creation
-resource_uri | A unique API endpoint that represents the container
-image_name | The Docker image name and tag of the container
-image_tag | Resource URI of the image (including tag) of the container
+autodestroy | Whether to terminate the container automatically if it stops (see [Autodestroy](https://support.tutum.co/support/solutions/articles/5000012175-) for more information)
+autorestart | Whether to restart the container automatically if it stops (see [Crash recovery](https://support.tutum.co/support/solutions/articles/5000012174-crash) for more information)
 bindings | A list of volume bindings that the container has mounted (see table `Container Binding attributes` below)
-name | A user provided name for the container (inherited from the service)
-node | The resource URI of the node where this container is running
-service | The resource URI of the service which this container is part of
-public_dns | The external FQDN of the container
-state | The state of the container (see table `Container states` below)
-synchronized | Flag indicating if the container is synchronized with the current service definition.
+container_envvars | List of user-defined environment variables set on the containers of the service, which will override the container environment variables (see table `Container Environment Variable attributes` below)
+container_ports | List of published ports of this container (see table `Container Port attributes` below)
+cpu_shares | The relative CPU priority of the container (see [Runtime Constraints on CPU and Memory](https://docs.docker.com/reference/run/#runtime-constraints-on-cpu-and-memory) for more information)
+deployed_datetime | The date and time of the last deployment of the container (if applicable, `null` otherwise)
+destroyed_datetime | The date and time of the `terminate` operation on the container (if applicable, `null` otherwise)
+entrypoint | Entrypoint used on the container on launch
 exit_code | The numeric exit code of the container (if applicable, `null` otherwise)
 exit_code_msg | A string representation of the exit code of the container (if applicable, `null` otherwise)
-deployed_datetime | The date and time of the last deployment of the container (if applicable, `null` otherwise)
-started_datetime | The date and time of the last `start` operation on the container (if applicable, `null` otherwise)
-stopped_datetime | The date and time of the last `stop` operation on the container (if applicable, `null` otherwise)
-destroyed_datetime | The date and time of the `terminate` operation on the container (if applicable, `null` otherwise)
-container_ports | List of published ports of this container (see table `Container Port attributes` below)
-container_envvars | List of user-defined environment variables set on the containers of the service, which will override the container environment variables (see table `Container Environment Variable attributes` below)
-entrypoint | Entrypoint used on the container on launch
-run_command | Run command used on the container on launch
-cpu_shares | The relative CPU priority of the container (see [Runtime Constraints on CPU and Memory](https://docs.docker.com/reference/run/#runtime-constraints-on-cpu-and-memory) for more information)
-memory | The memory limit of the container in MB (see [Runtime Constraints on CPU and Memory](https://docs.docker.com/reference/run/#runtime-constraints-on-cpu-and-memory) for more information)
+image_name | The Docker image name and tag of the container
+image_tag | Resource URI of the image (including tag) of the container
 last_metric | Last reported metric for the container (see table `Container Last Metric attributes` below for more information)
-autorestart | Whether to restart the container automatically if it stops (see [Crash recovery](https://support.tutum.co/support/solutions/articles/5000012174-crash) for more information)
-autodestroy | Whether to terminate the container automatically if it stops (see [Autodestroy](https://support.tutum.co/support/solutions/articles/5000012175-) for more information)
-roles | List of Tutum roles asigned to this container (see [API roles](https://support.tutum.co/support/solutions/articles/5000524639) for more information))
-linked_to_container | List of IP addresses of the linked containers (see table `Container Link attributes` below and [Service links](https://support.tutum.co/support/solutions/articles/5000012181) for more information)
 link_variables | List of environment variables that would be exposed in any container that is linked to this one
-privileged | Whether the container has Docker's `privileged` flag set or not (see [Runtime privilege](https://docs.docker.com/reference/run/#runtime-privilege-linux-capabilities-and-lxc-configuration) for more information)
+linked_to_container | List of IP addresses of the linked containers (see table `Container Link attributes` below and [Service links](https://support.tutum.co/support/solutions/articles/5000012181) for more information)
+memory | The memory limit of the container in MB (see [Runtime Constraints on CPU and Memory](https://docs.docker.com/reference/run/#runtime-constraints-on-cpu-and-memory) for more information)
+name | A user provided name for the container (inherited from the service)
+node | The resource URI of the node where this container is running
 private_ip | IP address of the container on the overlay network. This IP will be reachable from any other container.
+privileged | Whether the container has Docker's `privileged` flag set or not (see [Runtime privilege](https://docs.docker.com/reference/run/#runtime-privilege-linux-capabilities-and-lxc-configuration) for more information)
+public_dns | The external FQDN of the container
+resource_uri | A unique API endpoint that represents the container
+roles | List of Tutum roles asigned to this container (see [API roles](https://support.tutum.co/support/solutions/articles/5000524639) for more information))
+run_command | Run command used on the container on launch
+service | The resource URI of the service which this container is part of
+started_datetime | The date and time of the last `start` operation on the container (if applicable, `null` otherwise)
+state | The state of the container (see table `Container states` below)
+stopped_datetime | The date and time of the last `stop` operation on the container (if applicable, `null` otherwise)
+synchronized | Flag indicating if the container is synchronized with the current service definition.
+uuid | A unique identifier for the container generated automatically on creation
 
 
 ### Container Binding attributes
 
 Attribute | Description
 --------- | -----------
-host_path | The host path of the volume
 container_path | The container path where the volume is mounted
+host_path | The host path of the volume
 rewritable | `true` is the volume has writable permissions
 volume | The resource URI of the volume
 
@@ -270,13 +270,13 @@ volume | The resource URI of the volume
 
 Attribute | Description
 --------- | -----------
-protocol | The protocol of the port, either `tcp` or `udp`
+endpoint_uri | The URI of the endpoint for this port
 inner_port | The published port number inside the container
 outer_port | The published port number in the node public network interface
 port_name | Name of the service associated to this port
-uri_protocol | The protocol to be used in the endpoint for this port (i.e. `http`)
-endpoint_uri | The URI of the endpoint for this port
+protocol | The protocol of the port, either `tcp` or `udp`
 published | Whether the port has been published in the host public network interface or not. Non-published ports can only be accessed via links.
+uri_protocol | The protocol to be used in the endpoint for this port (i.e. `http`)
 
 
 ### Container Environment Variable attributes
@@ -304,18 +304,18 @@ Terminated | The container has been deleted. No actions allowed in this state.
 Attribute | Description
 --------- | -----------
 cpu       | CPU percentage usage
-memory    | Memory usage in bytes
 disk      | Disk storage usage in bytes
+memory    | Memory usage in bytes
 
 
 ### Container Link attributes
 
 Attribute | Description
 --------- | -----------
+endpoints | A dictionary with the endpoints (protocol, IP and port) to be used to reach each of the "server" container exposed ports
 name | The name given to the link
 from_container | The resource URI of the "client" container
 to_container | The resource URI of the "server" container being linked
-endpoints | A dictionary with the endpoints (protocol, IP and port) to be used to reach each of the "server" container exposed ports
 
 
 ## List all containers
@@ -363,8 +363,8 @@ Available in Tutum's **REST API**
 
 Parameter | Description
 --------- | -----------
-state | Filter by state. Possible values: `Starting`, `Running`, `Stopping`, `Stopped`, `Terminating`, `Terminated`
 name | Filter by container name
+state | Filter by state. Possible values: `Starting`, `Running`, `Stopping`, `Stopped`, `Terminating`, `Terminated`
 
 
 
@@ -471,8 +471,8 @@ Available in Tutum's **STREAM API**
 
 Parameter | Description
 --------- | -----------
-uuid | The UUID of the container to retrieve logs
 tail | Number of lines to show from the end of the logs (default: `300`)
+uuid | The UUID of the container to retrieve logs
 
 
 ## Start a container
@@ -718,5 +718,5 @@ Available in Tutum's **STREAM API**
 
 Parameter | Description
 --------- | -----------
-uuid | The UUID of the container where the command will be executed
 command | Command to be executed (default: `sh`)
+uuid | The UUID of the container where the command will be executed

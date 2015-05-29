@@ -30,24 +30,24 @@ Tutum events are generated every time any of the following objects is created or
 
 Attribute | Description
 --------- | -----------
-type | Type of object that was created or updated. For possible values check the [events types](#event-types) table below.
 action | Type of action that was executed on the object. Posible values: `create`, `update` or `delete`
 parents | List of resource URIs (REST API) of the parents of the object, according to the "Parent-child hierarchy" table below
 resource_uri | Resource URI (REST API) of the object that was created or updated. You can do a `GET` operation on this URL to fetch its details
 state | The current state of the object
+type | Type of object that was created or updated. For possible values check the [events types](#event-types) table below.
 
 
 ### Event types
 
 Type | Description
 ---- | -----------
+action | Whenever a `Action` is created or updated
+container | Whenever a `Container` is created or updated
+error | Sent when an error occurs on the websocket connection or as part of the authentication process
+node | Whenever a `Node` is created or updated
+nodecluster | Whenever a `Node Cluster` is created or updated
 stack | Whenever a `Stack` is created or updated
 service | Whenever a `Service` is created or updated
-container | Whenever a `Container` is created or updated
-nodecluster | Whenever a `Node Cluster` is created or updated
-node | Whenever a `Node` is created or updated
-action | Whenever a `Action` is created or updated
-error | Sent when an error occurs on the websocket connection or as part of the authentication process
 
 
 ### Parent-child hierarchy
@@ -118,5 +118,5 @@ Available in Tutum's **STREAM API**
 
 Parameter | Description
 --------- | -----------
-user | The username to authenticate as
 token | The API Key to authenticate with
+user | The username to authenticate as

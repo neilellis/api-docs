@@ -26,11 +26,11 @@ A volume group is a representation of a group of Docker volumes belonging to a s
 
 Attribute | Description
 --------- | -----------
-uuid | A unique identifier for the volume group generated automatically on creation
 name | The name of the volume group
 resource_uri | A unique API endpoint that represents the volume group
 state | The state of the volume group (see table `Volume Group states` below)
 services | List of the resource URIs of the services using this volume group
+uuid | A unique identifier for the volume group generated automatically on creation
 volumes | List of the resource URIs of the volumes belonging to this volume group
 
 

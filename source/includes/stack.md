@@ -8,6 +8,7 @@
 {
   "deployed_datetime": "Mon, 13 Oct 2014 11:01:43 +0000",
   "destroyed_datetime": null,
+  "label": "deployment stack",
   "name": "tutum-app",
   "resource_uri": "/api/v1/stack/7fe7ec85-58be-4904-81da-de2219098d7c/",
   "services": [
@@ -64,14 +65,15 @@ A stack is a logical grouping of closely related services, that may be linked wi
 
 Attribute | Description
 --------- | -----------
-uuid | A unique identifier for the stack generated automatically on creation
-resource_uri | A unique API endpoint that represents the stack
-name | A user provided name for the stack.
-state | The state of the stack (see table `Stack states` below)
-synchronized | Flag indicating if the current stack definition is synchronized with their services.
-services | List of servicies belonging to the stack (the full json of each service)
 deployed_datetime | The date and time of the last deployment of the stack (if applicable, `null` otherwise)
 destroyed_datetime | The date and time of the `terminate` operation on the stack (if applicable, `null` otherwise)
+label | A user-friendly name for the stack (`name` by default)
+name | A user provided name for the stack.
+resource_uri | A unique API endpoint that represents the stack
+services | List of servicies belonging to the stack (the full json of each service)
+state | The state of the stack (see table `Stack states` below)
+synchronized | Flag indicating if the current stack definition is synchronized with their services.
+uuid | A unique identifier for the stack generated automatically on creation
 
 
 ### Stack states
@@ -205,8 +207,8 @@ Available in Tutum's **REST API**
 Parameter | Description
 --------- | -----------
 name | (required) A human-readable name for the stack, i.e. `my-hello-world-stack`
+label | (optional) A user-friendly name for the stack (`name` by default)
 services | (optional) List of services belonging to the stack. Each service accepts the same parameters as a [Create new service](#create-a-new-service) operation (default: `[]`) plus the ability to refer "links" and "volumes-from" by the name of another service in the stack (see example).
-
 
 
 ## Export an existing stack

@@ -33,21 +33,21 @@ Simple API calls that do not require asynchronous execution will return immediat
 
 Attribute | Description
 --------- | -----------
-resource_uri | A unique API endpoint that represents the action
-uuid | A unique identifier for the action generated automatically on creation
-object | The API object (resource URI) to which the action applies to
 action | Name of the operation performed/being performed
-method | HTTP method used to access the API
-path | HTTP path of the API accessed
-user_agent | The user agent provided by the client when accessing the API endpoint
-start_date | Date and time when the API call was performed and the operation started processing
+body | Data of the API call
 end_date | Date and time when the API call finished processing
-state | State of the operation (see table below)
 ip | IP address of the user that performed the API call
+is_user_action | If the action has been triggered by the user
 location | Geographic location of the IP address of the user that performed the API call
 logs | Logs produced as a result of the operation
-body | Data of the API call
-is_user_action | If the action has been triggered by the user
+method | HTTP method used to access the API
+object | The API object (resource URI) to which the action applies to
+path | HTTP path of the API accessed
+resource_uri | A unique API endpoint that represents the action
+start_date | Date and time when the API call was performed and the operation started processing
+state | State of the operation (see table below)
+user_agent | The user agent provided by the client when accessing the API endpoint
+uuid | A unique identifier for the action generated automatically on creation
 
 
 ### Action states

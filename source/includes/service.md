@@ -57,6 +57,7 @@
   "entrypoint": "",
   "image_name": "tutum/wordpress-stackable:latest",
   "image_tag": "/api/v1/image/tutum/wordpress-stackable/tag/latest/",
+  "label": "wordpress-stackable",
   "link_variables": {
     "WORDPRESS_STACKABLE_1_ENV_DB_HOST": "**LinkMe**",
     "WORDPRESS_STACKABLE_1_ENV_DB_NAME": "wordpress",
@@ -139,50 +140,51 @@ A service is a template used to deploy one or more containers.
 
 Attribute | Description
 --------- | -----------
-uuid | A unique identifier for the service generated automatically on creation
-resource_uri | A unique API endpoint that represents the service
+autodestroy | Whether to terminate the containers of the service automatically if they stop (see [Autodestroy](https://support.tutum.co/support/solutions/articles/5000012175-) for more information)
+autoredeploy | Whether to redeploy the containers of the service when its image is updated in Tutum registry (see [Tutum's private registry](https://support.tutum.co/support/solutions/articles/5000012183-using-tutum-s-private-docker-image-registry) for more information)
+autorestart | Whether to restart the containers of the service automatically if they stop (see [Crash recovery](https://support.tutum.co/support/solutions/articles/5000012174-crash) for more information)
+bindings | A list of volume bindings that the service has mounted (see table `Service binding attributes` below)
+container_envvars | List of user-defined environment variables to set on the containers of the service, which will override the image environment variables (see table `Service Environment Variable attributes` below)
+container_ports | List of ports to be published on the containers of this service (see table `Service Port attributes` below)
+containers | List of resource URIs of the containers launched as part of the service
+cpu_shares | The relative CPU priority of the containers of the service (see [Runtime Constraints on CPU and Memory](https://docs.docker.com/reference/run/#runtime-constraints-on-cpu-and-memory) for more information)
+current_num_containers | The actual number of containers deployed for the service
+deployed_datetime | The date and time of the last deployment of the service (if applicable, `null` otherwise)
+deployment_strategy | Container distribution among nodes (see table `Deployment strategies` below and [Deployment strategies](https://support.tutum.co/support/solutions/articles/5000520721) for more information)
+destroyed_datetime | The date and time of the `terminate` operation on the service (if applicable, `null` otherwise)
+entrypoint | Entrypoint to be set on the containers launched as part of the service, which will override the image entrypoint
 image_name | The Docker image name and tag used for the service containers
 image_tag | Resource URI of the image (including tag) used for the service containers
-name | A user provided name for the service. This name will be inherited by the service containers and will be used in endpoint URLs, environment variable names, etc.
-public_dns | An external FQDN that resolves to all IPs of the nodes where the service containers are running on (as an `A` record with multiple IP entries which will be used by clients in a [round-robin fashion](http://en.wikipedia.org/wiki/Round-robin_DNS)). If the service is not publishing any ports, this FQDN will fail to resolve.
-state | The state of the service (see table `Service states` below)
-synchronized | Flag indicating if the current service definition is synchronized with the current containers.
-deployed_datetime | The date and time of the last deployment of the service (if applicable, `null` otherwise)
-started_datetime | The date and time of the last `start` operation on the service (if applicable, `null` otherwise)
-stopped_datetime | The date and time of the last `stop` operation on the service (if applicable, `null` otherwise)
-destroyed_datetime | The date and time of the `terminate` operation on the service (if applicable, `null` otherwise)
-target_num_containers | The requested number of containers to deploy for the service
-current_num_containers | The actual number of containers deployed for the service
-running_num_containers | The actual number of containers deployed for the service in `Running` state
-stopped_num_containers | The actual number of containers deployed for the service in `Stopped` state
-stack | Resource URIs of the stack that the service belongs to
-containers | List of resource URIs of the containers launched as part of the service
-container_ports | List of ports to be published on the containers of this service (see table `Service Port attributes` below)
-container_envvars | List of user-defined environment variables to set on the containers of the service, which will override the image environment variables (see table `Service Environment Variable attributes` below)
-entrypoint | Entrypoint to be set on the containers launched as part of the service, which will override the image entrypoint
-run_command | Run command to be set on the containers launched as part of the service, which will override the image run command
-sequential_deployment | Whether the containers for this service should be deployed in sequence, linking each of them to the previous containers (see [Service scaling](https://support.tutum.co/support/solutions/articles/5000012179-service) for more information)
-cpu_shares | The relative CPU priority of the containers of the service (see [Runtime Constraints on CPU and Memory](https://docs.docker.com/reference/run/#runtime-constraints-on-cpu-and-memory) for more information)
-memory | The memory limit of the containers of the service in MB (see [Runtime Constraints on CPU and Memory](https://docs.docker.com/reference/run/#runtime-constraints-on-cpu-and-memory) for more information)
+label | A user-friendly name for the service (`name` by default)
+link_variables | List of environment variables that would be exposed in the containers if they are linked to this service
 linked_from_service | A list of services that are linked to this one (see table `Related services attributes` below)
 linked_to_service | A list of services that the service is linked to (see table `Related services attributes` below)
-bindings | A list of volume bindings that the service has mounted (see table `Service binding attributes` below)
-autorestart | Whether to restart the containers of the service automatically if they stop (see [Crash recovery](https://support.tutum.co/support/solutions/articles/5000012174-crash) for more information)
-autodestroy | Whether to terminate the containers of the service automatically if they stop (see [Autodestroy](https://support.tutum.co/support/solutions/articles/5000012175-) for more information)
-roles | List of Tutum roles asigned to this service (see [Service links](https://support.tutum.co/support/solutions/articles/5000012181-service) for more information)
-link_variables | List of environment variables that would be exposed in the containers if they are linked to this service
+memory | The memory limit of the containers of the service in MB (see [Runtime Constraints on CPU and Memory](https://docs.docker.com/reference/run/#runtime-constraints-on-cpu-and-memory) for more information)
+name | A user provided name for the service. This name will be inherited by the service containers and will be used in endpoint URLs, environment variable names, etc.
 privileged | Whether to start the containers with Docker's `privileged` flag set or not, which allows containers to access all devices on the host among other things (see [Runtime privilege](https://docs.docker.com/reference/run/#runtime-privilege-linux-capabilities-and-lxc-configuration) for more information)
-deployment_strategy | Container distribution among nodes (see table `Deployment strategies` below and [Deployment strategies](https://support.tutum.co/support/solutions/articles/5000520721) for more information)
+public_dns | An external FQDN that resolves to all IPs of the nodes where the service containers are running on (as an `A` record with multiple IP entries which will be used by clients in a [round-robin fashion](http://en.wikipedia.org/wiki/Round-robin_DNS)). If the service is not publishing any ports, this FQDN will fail to resolve.
+resource_uri | A unique API endpoint that represents the service
+roles | List of Tutum roles asigned to this service (see [Service links](https://support.tutum.co/support/solutions/articles/5000012181-service) for more information)
+run_command | Run command to be set on the containers launched as part of the service, which will override the image run command
+running_num_containers | The actual number of containers deployed for the service in `Running` state
+sequential_deployment | Whether the containers for this service should be deployed in sequence, linking each of them to the previous containers (see [Service scaling](https://support.tutum.co/support/solutions/articles/5000012179-service) for more information)
+stack | Resource URIs of the stack that the service belongs to
+started_datetime | The date and time of the last `start` operation on the service (if applicable, `null` otherwise)
+state | The state of the service (see table `Service states` below)
+stopped_datetime | The date and time of the last `stop` operation on the service (if applicable, `null` otherwise)
+stopped_num_containers | The actual number of containers deployed for the service in `Stopped` state
+synchronized | Flag indicating if the current service definition is synchronized with the current containers.
 tags | List of tags to be used to deploy the service (see [Tags](https://support.tutum.co/support/solutions/articles/5000508859) for more information)
-autoredeploy | Whether to redeploy the containers of the service when its image is updated in Tutum registry (see [Tutum's private registry](https://support.tutum.co/support/solutions/articles/5000012183-using-tutum-s-private-docker-image-registry) for more information)
+target_num_containers | The requested number of containers to deploy for the service
+uuid | A unique identifier for the service generated automatically on creation
 
 
 ### Service binding attributes
 
 Attribute | Description
 --------- | -----------
-host_path | The host path of the volume
 container_path | The container path where the volume is mounted
+host_path | The host path of the volume
 rewritable | `true` is the volume has writable permissions
 volumes_from | The resource URI of the service
 
@@ -191,11 +193,11 @@ volumes_from | The resource URI of the service
 
 Attribute | Description
 --------- | -----------
-protocol | The protocol of the port, either `tcp` or `udp`
+endpoint_uri | The URI of the service endpoint for this port
 inner_port | The published port number inside the container
 outer_port | The published port number in the node public network interface
 port_name | Name of the service associated to this port
-endpoint_uri | The URI of the service endpoint for this port
+protocol | The protocol of the port, either `tcp` or `udp`
 published | Whether the port has been published in the host public network interface or not. Non-published ports can only be accessed via links.
 
 
@@ -211,8 +213,8 @@ value | The value of the environment variable
 
 Attribute | Description
 --------- | -----------
-name | The link name
 from_service | The resource URI of the origin of the link
+name | The link name
 to_service | The resource URI of the target of the link
 
 
@@ -286,8 +288,8 @@ Available in Tutum's **REST API**
 
 Parameter | Description
 --------- | -----------
-state | Filter by state. Possible values: `Not running`, `Starting`, `Running`, `Partly running`, `Scaling`, `Redeploying`, `Stopping`, `Stopped`, `Terminating`, `Terminated`
 name | Filter by service name
+state | Filter by state. Possible values: `Not running`, `Starting`, `Running`, `Partly running`, `Scaling`, `Redeploying`, `Stopping`, `Stopped`, `Terminating`, `Terminated`
 
 
 
@@ -341,40 +343,41 @@ Available in Tutum's **REST API**
 Parameter | Description
 --------- | -----------
 image | (required) The image used to deploy this service in docker format, i.e. `tutum/hello-world`
-name | (optional) A human-readable name for the service, i.e. `my-hello-world-app` (default: `image` without namespace)
-target_num_containers | (optional) The number of containers to run for this service initially (default: 1)
-run_command | (optional) The command used to start the containers of this service, overriding the value specified in the image, i.e. `/run.sh` (default: `null`)
-entrypoint | (optional) The command prefix used to start the containers of this service, overriding the value specified in the image, i.e. `/usr/sbin/sshd` (default: `null`)
-container_ports | (optional) An array of objects with port information to be published in the containers for this service, which will be added to the image port information, i.e. `[{"protocol": "tcp", "inner_port": 80, "outer_port": 80}]` (default: `[]`) (See table `Service Port attributes` below)
-container_envvars | (optional) An array of objects with environment variables to be added in the service containers on launch (overriding any image-defined environment variables), i.e. `[{"key": "DB_PASSWORD", "value": "mypass"}]` (default: `[]`) (See table `Service Environment Variable attributes` below)
-linked_to_service | (optional) An array of service resource URIs to link this service to, including the link name, i.e. `[{"to_service": "/api/v1/service/80ff1635-2d56-478d-a97f-9b59c720e513/", "name": "db"}]` (default: `[]`) (See table `Related services attributes` below)
-bindings | (optional) An array of bindings this service has to mount, i.e. `[{"volumes_from": "/api/v1/service/80ff1635-2d56-478d-a97f-9b59c720e513/", "rewritable": true}]` (default: `[]`) (See table `Related bindings attributes` below)
-autorestart | (optional) Whether the containers for this service should be restarted if they stop, i.e. `ALWAYS` (default: `OFF`, possible values: `OFF`, `ON_FAILURE`, `ALWAYS`) (see [Crash recovery](https://support.tutum.co/support/solutions/articles/5000012174-crash) for more information)
 autodestroy | (optional) Whether the containers should be terminated if they stop, i.e. `OFF` (default: `OFF`, possible values: `OFF`, `ON_FAILURE`, `ALWAYS`) (see [Autodestroy](https://support.tutum.co/support/solutions/articles/5000012175-) for more information)
-sequential_deployment | (optional) Whether the containers should be launched and scaled in sequence, i.e. `true` (default: `false`) (see [Service scaling](https://support.tutum.co/support/solutions/articles/5000012179-service) for more information)
-roles | (optional) A list of Tutum API roles to grant the service, i.e. `["global"]` (default: `[]`, possible values: `global`) (see [Service links](https://support.tutum.co/support/solutions/articles/5000012181-service) for more information)
-privileged | (optional) Whether to start the containers with Docker's `privileged` flag set or not, i.e. `false` (default: `false`) (see [Runtime privilege](https://docs.docker.com/reference/run/#runtime-privilege-linux-capabilities-and-lxc-configuration) for more information)
-deployment_strategy | (optional) Container distribution among nodes (default: `EMPTIEST_NODE`, see table `Deployment strategies` above and [Deployment strategies](https://support.tutum.co/support/solutions/articles/5000520721) for more information)
-tags | (optional) A list of tags to be used to deploy the service (see [Tags](https://support.tutum.co/support/solutions/articles/5000508859) for more information) (default: `[]`)
 autoredeploy | (optional) Whether to redeploy the containers of the service when its image is updated in Tutum registry (default: `false`) (see [Tutum's private registry](https://support.tutum.co/support/solutions/articles/5000012183-using-tutum-s-private-docker-image-registry) for more information)
+autorestart | (optional) Whether the containers for this service should be restarted if they stop, i.e. `ALWAYS` (default: `OFF`, possible values: `OFF`, `ON_FAILURE`, `ALWAYS`) (see [Crash recovery](https://support.tutum.co/support/solutions/articles/5000012174-crash) for more information)
+bindings | (optional) An array of bindings this service has to mount, i.e. `[{"volumes_from": "/api/v1/service/80ff1635-2d56-478d-a97f-9b59c720e513/", "rewritable": true}]` (default: `[]`) (See table `Related bindings attributes` below)
+container_envvars | (optional) An array of objects with environment variables to be added in the service containers on launch (overriding any image-defined environment variables), i.e. `[{"key": "DB_PASSWORD", "value": "mypass"}]` (default: `[]`) (See table `Service Environment Variable attributes` below)
+container_ports | (optional) An array of objects with port information to be published in the containers for this service, which will be added to the image port information, i.e. `[{"protocol": "tcp", "inner_port": 80, "outer_port": 80}]` (default: `[]`) (See table `Service Port attributes` below)
+deployment_strategy | (optional) Container distribution among nodes (default: `EMPTIEST_NODE`, see table `Deployment strategies` above and [Deployment strategies](https://support.tutum.co/support/solutions/articles/5000520721) for more information)
+entrypoint | (optional) The command prefix used to start the containers of this service, overriding the value specified in the image, i.e. `/usr/sbin/sshd` (default: `null`)
+label | (optional) A user-friendly name for the service (`name` by default)
+linked_to_service | (optional) An array of service resource URIs to link this service to, including the link name, i.e. `[{"to_service": "/api/v1/service/80ff1635-2d56-478d-a97f-9b59c720e513/", "name": "db"}]` (default: `[]`) (See table `Related services attributes` below)
+name | (optional) A human-readable name for the service, i.e. `my-hello-world-app` (default: `image` without namespace)
+privileged | (optional) Whether to start the containers with Docker's `privileged` flag set or not, i.e. `false` (default: `false`) (see [Runtime privilege](https://docs.docker.com/reference/run/#runtime-privilege-linux-capabilities-and-lxc-configuration) for more information)
+roles | (optional) A list of Tutum API roles to grant the service, i.e. `["global"]` (default: `[]`, possible values: `global`) (see [Service links](https://support.tutum.co/support/solutions/articles/5000012181-service) for more information)
+run_command | (optional) The command used to start the containers of this service, overriding the value specified in the image, i.e. `/run.sh` (default: `null`)
+sequential_deployment | (optional) Whether the containers should be launched and scaled in sequence, i.e. `true` (default: `false`) (see [Service scaling](https://support.tutum.co/support/solutions/articles/5000012179-service) for more information)
+tags | (optional) A list of tags to be used to deploy the service (see [Tags](https://support.tutum.co/support/solutions/articles/5000508859) for more information) (default: `[]`)
+target_num_containers | (optional) The number of containers to run for this service initially (default: 1)
 
 
 ### Related bindings attributes
 
 Attribute | Description
 --------- | -----------
-host_path | (optional) The host path of the volume
 container_path | (required if `volumes_from` is omitted) The container path where the volume is mounted
-rewritable | (optional) `true` is the volume has writable permissions (default: `true`)
 volumes_from | (required if `container_path` is omitted) The resource URI of the service
+host_path | (optional) The host path of the volume
+rewritable | (optional) `true` is the volume has writable permissions (default: `true`)
 
 
 ### Service Port attributes
 
 Attribute | Description
 --------- | -----------
-protocol | (required) The protocol of the port, either `tcp` or `udp`
 inner_port | (required) The port number inside the container to be published
+protocol | (required) The protocol of the port, either `tcp` or `udp`
 outer_port | (optional) The port number in the node public network interface to be published (default: dynamic allocation if `published` is `true`)
 published | (optional) Whether to publish the port in the host public network interface or not. Non-published ports can only be accessed via links. (default: `false`)
 
@@ -498,8 +501,8 @@ Available in Tutum's **STREAM API**
 
 Parameter | Description
 --------- | -----------
-uuid | The UUID of the service to retrieve logs
 tail | Number of lines to show from the end of the logs (default: `300`)
+uuid | The UUID of the service to retrieve logs
 
 
 ## Update an existing service
@@ -570,13 +573,16 @@ uuid | The UUID of the service to update
 
 Parameter | Description
 --------- | -----------
-autorestart | (optional) Whether the containers for this service should be restarted if they stop, i.e. `ALWAYS` (possible values: `OFF`, `ON_FAILURE`, `ALWAYS`) (see [Crash recovery](https://support.tutum.co/support/solutions/articles/5000012174-crash) for more information)
 autodestroy | (optional) Whether the containers should be terminated if they stop, i.e. `OFF` (possible values: `OFF`, `ON_FAILURE`, `ALWAYS`) (see [Autodestroy](https://support.tutum.co/support/solutions/articles/5000012175-) for more information)
+autoredeploy | (optional) Whether to redeploy the containers of the service when its image is updated in Tutum registry (see [Tutum's private registry](https://support.tutum.co/support/solutions/articles/5000012183-using-tutum-s-private-docker-image-registry) for more information)
+autorestart | (optional) Whether the containers for this service should be restarted if they stop, i.e. `ALWAYS` (possible values: `OFF`, `ON_FAILURE`, `ALWAYS`) (see [Crash recovery](https://support.tutum.co/support/solutions/articles/5000012174-crash) for more information)
 container_envvars | (optional) An array of objects with environment variables to be added in the service containers on launch (overriding any image-defined environment variables), i.e. `[{"key": "DB_PASSWORD", "value": "mypass"}]` (See table `Service Environment Variable attributes`)
 container_ports | (optional) An array of objects with port information to be published in the containers for this service, which will be added to the image port information, i.e. `[{"protocol": "tcp", "inner_port": 80, "outer_port": 80}]` (See table `Service Port attributes`)
 cpu_shares | (optional) The relative CPU priority of the containers the service describes (see [Runtime Constraints on CPU and Memory](https://docs.docker.com/reference/run/#runtime-constraints-on-cpu-and-memory) for more information)
+deployment_strategy | (optional) Container distribution among nodes. A service cannot be updated to or from a deployment strategy of `EVERY_NODE`. (See table `Deployment strategies` above and [Deployment strategies](https://support.tutum.co/support/solutions/articles/5000520721) for more information)
 entrypoint | (optional) The command prefix used to start the containers of this service, overriding the value specified in the image, i.e. `/usr/sbin/sshd`
 image | (optional) The image used to deploy this service in docker format, i.e. `tutum/hello-world`, `tutum/ubuntu:5.6`. If no tag is indicated, it will be set to `latest` by default
+label | (optional) A user-friendly name for the service (`name` by default)
 linked_to_service | (optional) An array of service resource URIs to link this service to, including the link name, i.e. `[{"to_service": "/api/v1/service/80ff1635-2d56-478d-a97f-9b59c720e513/", "name": "db"}]` (See table `Related services attributes` below)
 memory | (optional) The memory limit of the containers of the service in MB (see [Runtime Constraints on CPU and Memory](https://docs.docker.com/reference/run/#runtime-constraints-on-cpu-and-memory) for more information)
 privileged | (optional) Whether to start the containers with Docker's `privileged` flag set or not, i.e. `false` (see [Runtime privilege](https://docs.docker.com/reference/run/#runtime-privilege-linux-capabilities-and-lxc-configuration) for more information)
@@ -585,8 +591,6 @@ run_command | (optional) The command used to start the containers of this servic
 sequential_deployment | (optional) Whether the containers should be launched and scaled in sequence, i.e. `true` (see [Service scaling](https://support.tutum.co/support/solutions/articles/5000012179-service) for more information)
 tags | (optional) List of new tags the service will have. This operation replaces the tag list
 target_num_containers | (optional) The number of containers to scale this service to
-deployment_strategy | (optional) Container distribution among nodes. A service cannot be updated to or from a deployment strategy of `EVERY_NODE`. (See table `Deployment strategies` above and [Deployment strategies](https://support.tutum.co/support/solutions/articles/5000520721) for more information)
-autoredeploy | Whether to redeploy the containers of the service when its image is updated in Tutum registry (see [Tutum's private registry](https://support.tutum.co/support/solutions/articles/5000012183-using-tutum-s-private-docker-image-registry) for more information)
 
 
 ## Start a service

@@ -31,11 +31,11 @@ A provider is a representation of a cloud provider supported by Tutum. Providers
 
 Attribute | Description
 --------- | -----------
-resource_uri | A unique API endpoint that represents the provider
-name | A unique identifier for the provider
-label | A user-friendly name for the provider
-regions | A list of resource URIs of the regions available in this provider
 available | Whether the provider is currently available for new node deployments
+label | A user-friendly name for the provider
+name | A unique identifier for the provider
+regions | A list of resource URIs of the regions available in this provider
+resource_uri | A unique API endpoint that represents the provider
 
 
 ## List all providers

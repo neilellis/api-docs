@@ -17,6 +17,7 @@
 	"external_fqdn": "fc1a5bb9-user.node.tutum.io",
 	"last_seen": "Thu, 25 Sep 2014 13:14:44 +0000",
 	"memory": 1792,
+	"label": "fc1a5bb9-user.node.tutum.io",
 	"last_metric": {
 		"cpu": 1.3278507035616,
 		"disk": 462479360,
@@ -43,27 +44,28 @@ A node is a virtual machine provided by a cloud provider where containers can be
 
 Attribute | Description
 --------- | -----------
-uuid | A unique identifier for the node generated automatically on creation
-resource_uri | A unique API endpoint that represents the node
-external_fqdn | An automatically generated FQDN for the node. Containers deployed on this node will inherit this FQDN.
-state | The state of the node. See the below table for a list of possible states.
-node_cluster | The resouce URI of the node cluster to which this node belongs to (if applicable)
-node_type | The resource URI of the node type used for the node
-region | The resource URI of the region where the node is deployed
+cpu | Node number of CPUs
+current_num_containers | The actual number of containers deployed in this node
+deployed_datetime | The date and time when this node cluster was deployed
+destroyed_datetime | The date and time when this node cluster was terminated (if applicable)
+disk | Node storage size in GB
 docker_execdriver | Docker's execution driver used in the node
 docker_graphdriver | Docker's storage driver used in the node
 docker_version | Docker's version used in the node
-cpu | Node number of CPUs
-disk | Node storage size in GB
-memory | Node memory in MB
+external_fqdn | An automatically generated FQDN for the node. Containers deployed on this node will inherit this FQDN.
+label | A user-friendly name for the node (`external_fqdn` by default)
 last_metric | Last reported metric from the node (see table `Node Last Metric attributes` below for more information)
-current_num_containers | The actual number of containers deployed in this node
 last_seen | Date and time of the last time the node was contacted by Tutum
+memory | Node memory in MB
+node_cluster | The resouce URI of the node cluster to which this node belongs to (if applicable)
+node_type | The resource URI of the node type used for the node
 public_ip | The public IP allocated to the node
-tunnel | If the node does not accept incoming connections to port 2375, the address of the reverse tunnel to access the docker daemon, or `null` otherwise
-deployed_datetime | The date and time when this node cluster was deployed
-destroyed_datetime | The date and time when this node cluster was terminated (if applicable)
+region | The resource URI of the region where the node is deployed
+resource_uri | A unique API endpoint that represents the node
+state | The state of the node. See the below table for a list of possible states.
 tags | List of tags to identify the node when deploying services (see [Tags](https://support.tutum.co/support/solutions/articles/5000508859) for more information)
+tunnel | If the node does not accept incoming connections to port 2375, the address of the reverse tunnel to access the docker daemon, or `null` otherwise
+uuid | A unique identifier for the node generated automatically on creation
 
 
 ### Node states
@@ -82,8 +84,8 @@ Terminated | The node has been terminated and is no longer present in the cloud 
 Attribute | Description
 --------- | -----------
 cpu       | CPU percentage usage
-memory    | Memory usage in bytes
 disk      | Disk storage usage in bytes
+memory    | Memory usage in bytes
 
 
 ## List all nodes
@@ -131,11 +133,10 @@ Available in Tutum's **REST API**
 
 Parameter | Description
 --------- | -----------
-state | Filter by state. Possible values: `Init`, `Deploying`, `Provisioning`, `Deployed`, `Terminating`, `Terminated`
 node_cluster | Filter by node cluster (resource URI)
 node_type | Filter by node type (resource URI)
 region | Filter by region (resource URI)
-
+state | Filter by state. Possible values: `Init`, `Deploying`, `Provisioning`, `Deployed`, `Terminating`, `Terminated`
 
 
 ## Get an existing node
@@ -216,7 +217,7 @@ Host: dashboard.tutum.co
 Authorization: ApiKey username:apikey
 Accept: application/json
 
-{"tags": [{"name": "tag-1"}]}
+{"tags": [{"name": "tag-1"}], "label": "dev node"}
 ```
 
 ```shell
@@ -224,7 +225,7 @@ tutum tag add -t tag-1 7eaf7fff
 tutum tag set -t tag-2 7eaf7fff
 ```
 
-Replaces the old tags in the node for the new list provided.
+Names the node with a user-friendly name and/or replaces the old tags for the new list provided.
 
 ### Endpoint Type
 
@@ -244,6 +245,7 @@ uuid | The UUID of the node to retrieve
 
 Parameter | Description
 --------- | -----------
+label | (optional) A user-friendly name for the node (`external_fqdn` by default)
 tags | (optional) List of tags the node will have. This operation replaces the tag list.
 
 

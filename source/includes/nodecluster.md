@@ -10,6 +10,7 @@
     "deployed_datetime": "Tue, 16 Sep 2014 17:01:15 +0000",
     "destroyed_datetime": null,
     "disk": 60,
+    "label": "my test cluster",
     "name": "TestCluster",
     "node_type": "/api/v1/nodetype/digitalocean/512mb/",
     "nodes": [
@@ -35,19 +36,20 @@ A node cluster is a group of nodes that share the same provider, region and/or a
 
 Attribute | Description
 --------- | -----------
-uuid | A unique identifier for the node cluster generated automatically on creation
-resource_uri | A unique API endpoint that represents the node cluster
-name | A user provided name for the node cluster
-state | The state of the node cluster. See the below table for a list of possible states.
-node_type | The resource URI of the node type used for the node cluster
-disk | The size of the disk where images and containers are stored (in GB)
-nodes | A list of resource URIs of the `Node` objects on the node cluster
-region | The resource URI of the `Region` object where the node cluster is deployed
-target_num_nodes | The desired number of nodes for the node cluster
 current_num_nodes | The actual number of nodes in the node cluster. This may differ from `target_num_nodes` if the node cluster is being deployed or scaled
 deployed_datetime | The date and time when this node cluster was deployed
 destroyed_datetime | The date and time when this node cluster was terminated (if applicable)
+disk | The size of the disk where images and containers are stored (in GB)
+label | A user-friendly name for the node cluster (`name` by default)
+name | A user provided name for the node cluster
+node_type | The resource URI of the node type used for the node cluster
+nodes | A list of resource URIs of the `Node` objects on the node cluster
+region | The resource URI of the `Region` object where the node cluster is deployed
+resource_uri | A unique API endpoint that represents the node cluster
+state | The state of the node cluster. See the below table for a list of possible states.
 tags | List of tags to identify the node cluster nodes when deploying services (see [Tags](https://support.tutum.co/support/solutions/articles/5000508859) for more information)
+target_num_nodes | The desired number of nodes for the node cluster
+uuid | A unique identifier for the node cluster generated automatically on creation
 
 
 ### Node Cluster states
@@ -109,10 +111,10 @@ Available in Tutum's **REST API**
 
 Parameter | Description
 --------- | -----------
-state | Filter by state. Possible values: `Init`, `Deploying`, `Deployed`, `Partly deployed`, `Scaling`, `Terminating`, `Terminated`, `Empty cluster`
 name | Filter by node cluster name
-region | Filter by region (resource URI)
 node_type | Filter by node type (resource URI)
+region | Filter by region (resource URI)
+state | Filter by state. Possible values: `Init`, `Deploying`, `Deployed`, `Partly deployed`, `Scaling`, `Terminating`, `Terminated`, `Empty cluster`
 
 
 ## Create a new node cluster
@@ -170,6 +172,7 @@ name | (required) A user provided name for the node cluster
 node_type | (required) The resource URI of the node type to be used for the node cluster
 region | (required) The resource URI of the region where the node cluster is to be deployed
 disk | (optional) The size of the volume to create where images and containers will be stored, in GB (default: `60`). Not available for Digital Ocean.
+label | (optional) A user-friendly name for the node cluster (`name` by default)
 target_num_nodes | (optional) The desired number of nodes for the node cluster (default: `1`)
 tags | (optional) List of tags of the node cluster to be used when deploying services see [Tags](https://support.tutum.co/support/solutions/articles/5000508859) for more information) (default: `[]`)
 
@@ -328,8 +331,8 @@ uuid | The UUID of the node cluster to update
 
 Parameter | Description
 --------- | -----------
-target_num_nodes | (optional) The number of nodes to scale this node cluster to
 tags | (optional) List of tags the node cluster (and nodes within the node cluster) will have. This operation replaces the tag list.
+target_num_nodes | (optional) The number of nodes to scale this node cluster to
 
 
 ## Upgrade Docker Daemon

@@ -24,11 +24,11 @@ A volume is a representation of a Docker volume in a node.
 
 Attribute | Description
 --------- | -----------
-uuid | A unique identifier for the volume generated automatically on creation
-resource_uri | A unique API endpoint that represents the volume
-node | The resource URI of the node where the volume is
-state | The state of the volume (see table `Volume states` below)
 containers | List of the resource URIs of the containers using this volume
+node | The resource URI of the node where the volume is
+resource_uri | A unique API endpoint that represents the volume
+state | The state of the volume (see table `Volume states` below)
+uuid | A unique identifier for the volume generated automatically on creation
 volume_group | The resource URI of the volume group this volume belongs to
 
 

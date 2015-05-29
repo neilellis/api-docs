@@ -32,14 +32,13 @@ A node type is a representation of an instance size supported by a certain cloud
 
 Attribute | Description
 --------- | -----------
-resource_uri | A unique API endpoint that represents the node type
-name | An identifier for the node type
-label | A user-friendly name for the node type
-regions | A list of resource URIs of the regions to which this node type can be deployed to
 availability_zones | A list of resource URIs of the availability zones to which this node type can be deployed to
-provider | The resource URI of the provider of the node type
 available | Whether the node type is currently available for new node deployments
-
+label | A user-friendly name for the node type
+name | An identifier for the node type
+provider | The resource URI of the provider of the node type
+regions | A list of resource URIs of the regions to which this node type can be deployed to
+resource_uri | A unique API endpoint that represents the node type
 
 ## List all node types
 
@@ -86,9 +85,9 @@ Available in Tutum's **REST API**
 
 Parameter | Description
 --------- | -----------
+availability_zones | Filter by availability zone (resource URI)
 name | Filter by node type name
 regions | Filter by region (resource URI)
-availability_zones | Filter by availability zone (resource URI)
 
 
 ## Get an individual node type
